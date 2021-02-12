@@ -1,0 +1,29 @@
+const { fetchBreedDescription } = require('../breedFetcher');
+const { assert } = require("chai");
+
+describe("fetchBreedDescription", () => {
+  it('returns a string description for a valid breed, via callback', (done) => {
+    fetchBreedDescription('Siberian', (error, desc) => {
+      assert.equal(error, null);
+      const expectedDesc = "The Siberians dog like temperament and affection makes the ideal lap cat and will live quite happily indoors. Very agile and powerful, the Siberian cat can easily leap and reach high places, including the tops of refrigerators and even doors.";
+      assert.equal(expectedDesc, desc.trim());
+      done();
+    });
+  });
+  it('returns a string description for a valid breed, via callback', (done) => {
+    fetchBreedDescription('Chartreux', (error, desc) => {
+      assert.equal(error, null);
+      const expectedDesc = "The Chartreux is generally silent but communicative. Short play sessions, mixed with naps and meals are their perfect day. Whilst appreciating any attention you give them, they are not demanding, content instead to follow you around devotedly, sleep on your bed and snuggle with you if you’re not feeling well.";
+      assert.equal(expectedDesc, desc.trim());
+      done();
+    });
+  });
+  it('returns an error message for a invalid breed, via callback', (done) => {
+    fetchBreedDescription('Chartreuxs', (error, desc) => {
+      const expectedDesc = "Sorry, we don't have this breed.";
+      assert.equal(expectedDesc, error);
+      assert.equal(desc, null);
+      done();
+    });
+  });
+});
